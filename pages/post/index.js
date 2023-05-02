@@ -28,7 +28,7 @@ const data=await res.json()
 
     return {
         props:{
-            data:data.slice(0,3)
+            data:data
         }
     }
 }
