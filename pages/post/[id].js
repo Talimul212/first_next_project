@@ -26,8 +26,16 @@ export async function getStaticProps(ctx){
 }
 // fffff
 export async function getStaticPaths() {
+    const res=await fetch("https://jsonplaceholder.typicode.com/posts")
+const data=await res.json()
+const paths=data.map((post)=>{
+    return{
+       params:{id:`${post.id}`},
+    }
+})
     return {
-      paths: [{ params: { id: '1' } }, { params: { id: '2' } }],
+    //   paths: [{ params: { id: '1' } }, { params: { id: '2' } }],
+    paths: paths,
       fallback: false, // can also be true or 'blocking'
     }
   }
