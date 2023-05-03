@@ -1,3 +1,4 @@
+import Navbar from "@/Components/Navbar";
 import Link from "next/link";
 
 function user({users}) {
@@ -32,5 +33,14 @@ const data=await res.json()
         }
     }
 }
+
+user.getLayout=function getLayout(page) {
+    return (
+      <>
+      <Navbar></Navbar>
+        {page}
+      </>
+    )
+  }
 
 export default user;

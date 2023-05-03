@@ -1,37 +1,38 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
 function SingleUser({user}) {
+    const[users,setUsers]=useState({}||" ");
+    const{id}=useRouter().query;
+    useEffect(()=>{
+        fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
+        .then(res=>res.json())
+        .then(data=>setUsers(data))
+    }
+    ,[])
+
     return (
         <div>
           <h1>Single User Data</h1>
-          <p>user name : {user.name}</p>
+          <p>user name : {users.name}</p>
         </div>
     );
 }
 
-export async function getStaticProps(ctx){
-const {params}=ctx
-    const res=await fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`)
-    const data=await res.json()
-    return {
-        props:{
-            user:data
-        }
-    }
-}
 
 
-export async function getStaticPaths() {
-    const res=await fetch("https://jsonplaceholder.typicode.com/users")
-const data=await res.json()
-const paths=data.map((user)=>{
-    return{
-       params:{id:`${user.id}`},
-    }
-})
-    return {
-    //   paths: [{ params: { id: '1' } }, { params: { id: '2' } }],
-    paths: paths,
-      fallback: false, // can also be true or 'blocking'
-    }
-  }
+// export async function getServerSideProps(ctx){
+
+//     const {params}=ctx
+//     const res=await fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`)
+//     const data=await res.json()
+//     return {
+//         props:{
+//             user:data
+//         }
+//     }
+// }
+
+
 
 export default SingleUser;
